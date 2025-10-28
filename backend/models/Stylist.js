@@ -38,6 +38,11 @@ const stylistSchema = new Schema({
       ref: "Booking",
     },
   ],
+
+  salon: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Salon",
+  },
 });
 
 module.exports = mongoose.model("Stylist", stylistSchema);

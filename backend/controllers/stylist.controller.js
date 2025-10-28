@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const Stylist = require("../models/Stylist");
 const { createStylist } = require("../services/stylist.service");
+const Salon = require("../models/Salon");
 
 module.exports.registerStylist = async (req, res) => {
   try {
@@ -95,5 +96,49 @@ module.exports.getStylistProfile = async (req, res) => {
     res.status(200).json(req.stylist);
   } catch (error) {
     console.log(error);
+  }
+};
+
+module.exports.enrollInSalon = async (req, res) => {
+  try {
+    const { salonId, salonNumber } = req.body;
+    const stylist = req.stylist;
+
+    if (!stylist) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    if (!salonId) {
+      return res.status(400).json({ message: "All feilds are required" });
+    }
+
+    const salon = await Salon.findById(salonId);
+
+    if (!salon) {
+      return res.status(404).json({ message: "Salon not found" });
+    }
+
+    if (salon.salonNumber !== salonNumber) {
+      return res.status(400).json({ message: "Invalid salon number" });
+    }
+
+    if (stylist.salon) {
+      return res
+        .status(400)
+        .json({ message: "You are already enrolled in a salon" });
+    }
+
+    await Stylist.findByIdAndUpdate(stylist._id, {
+      $push: { salon: salon._id },
+    });
+
+    await Salon.findByIdAndUpdate(salon._id, {
+      $push: { stylists: stylist._id },
+    });
+
+    res.status(200).json({ message: "Enrolled in salon successfully", salon });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to enroll in salon" });
   }
 };
