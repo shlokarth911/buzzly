@@ -26,9 +26,10 @@ const bookingModel = new Schema({
     },
   ],
 
-  isAccepted: {
-    type: Boolean,
-    default: false,
+  status: {
+    type: String,
+    default: "pending",
+    enum: ["pending", "accepted", "rejected", "completed"],
   },
 });
 

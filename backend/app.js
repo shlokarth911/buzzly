@@ -24,10 +24,12 @@ const userRoutes = require("./routes/user.routes.js");
 const stylistRoutes = require("./routes/stylist.routes.js");
 const bookingRoutes = require("./routes/booking.routes.js");
 const salonRoutes = require("./routes/salon.routes.js");
+const queueRoutes = require("./routes/queue.routes.js");
 
 app.use("/user", userRoutes);
 app.use("/stylist", stylistRoutes);
 app.use("/booking", bookingRoutes);
 app.use("/salon", salonRoutes);
+app.use("/queue", queueRoutes);
 
 module.exports = app;

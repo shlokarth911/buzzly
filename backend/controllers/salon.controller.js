@@ -11,6 +11,11 @@ module.exports.registerSalon = async (req, res) => {
 
     const salonNumber = Math.floor(10000000 + Math.random() * 90000000);
 
+    const isSalonAlreadyExists = await Salon.findOne({ phone });
+    if (isSalonAlreadyExists) {
+      return res.status(400).json({ message: "Salon already exists" });
+    }
+
     const salon = await createSalon({
       name,
       type,

@@ -1,4 +1,5 @@
 const bookingModel = require("../models/Booking");
+const Queue = require("../models/Queue");
 const Stylist = require("../models/Stylist");
 const userModel = require("../models/User");
 const User = require("../models/User");
@@ -58,11 +59,17 @@ module.exports.acceptBooking = async (req, res) => {
       return res.status(404).json({ error: "Booking not found" });
     }
 
-    booking.isAccepted = true;
+    booking.status = "accepted";
 
+    const queue = await Queue.findOneAndUpdate(
+      { stylist: stylistId },
+      { $push: { bookings: bookingId } }
+    );
+
+    await queue.save();
     await booking.save();
 
-    res.status(200).json({ message: "Booking accepted", booking });
+    res.status(200).json({ message: "Booking accepted", booking, queue });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to accept booking" });

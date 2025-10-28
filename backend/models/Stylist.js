@@ -32,6 +32,20 @@ const stylistSchema = new Schema({
     type: String,
   },
 
+  services: [
+    {
+      service: {
+        type: String,
+      },
+      price: {
+        type: Number,
+      },
+      estimatedTime: {
+        type: Number,
+      },
+    },
+  ],
+
   bookings: [
     {
       type: mongoose.Schema.Types.ObjectId,

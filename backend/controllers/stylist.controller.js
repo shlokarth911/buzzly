@@ -7,7 +7,8 @@ const Salon = require("../models/Salon");
 
 module.exports.registerStylist = async (req, res) => {
   try {
-    const { name, email, password, phoneNumber, address, city } = req.body;
+    const { name, email, password, phoneNumber, address, city, services } =
+      req.body;
     if (!name || !email || !password) {
       return res
         .status(400)
@@ -34,6 +35,7 @@ module.exports.registerStylist = async (req, res) => {
       phoneNumber,
       address,
       city,
+      services,
     });
 
     const token = jwt.sign({ id: stylist._id }, process.env.JWT_SECRET, {
