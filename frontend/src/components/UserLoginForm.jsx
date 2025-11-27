@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { toast } from "sonner";
+import { GalleryVerticalEnd } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,30 +10,22 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
 import { useState } from "react";
+import { toast } from "sonner";
 
-export function SignupForm({ className, ...props }) {
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+export function UserLoginForm({ className, ...props }) {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     try {
-      if (password !== confirmPassword) {
-        toast.error("Passwords do not match");
-        return;
-      }
-
       const userData = {
-        name,
         email,
         password,
       };
-
-      console.log(userData);
     } catch (error) {
       console.log(error);
     }
@@ -44,29 +36,12 @@ export function SignupForm({ className, ...props }) {
       <form onSubmit={submitHandler}>
         <FieldGroup>
           <div className="flex flex-col items-center gap-2 text-center">
-            <a
-              href="#"
-              className="flex flex-col items-center gap-2 font-medium"
-            >
-              <span className="sr-only">Buzzly</span>
-            </a>
             <h1 className="text-xl font-bold">Welcome to Buzzly</h1>
-
             <FieldDescription>
-              Already have an account? <Link to="/user/login">Log in</Link>
+              Don&apos;t have an account?{" "}
+              <Link to="/user/register">Register</Link>
             </FieldDescription>
           </div>
-          <Field>
-            <FieldLabel htmlFor="name">Name</FieldLabel>
-            <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              id="name"
-              type="text"
-              placeholder="Jhon Doe"
-              required
-            />
-          </Field>
           <Field>
             <FieldLabel htmlFor="email">Email</FieldLabel>
             <Input
@@ -78,32 +53,18 @@ export function SignupForm({ className, ...props }) {
               required
             />
           </Field>
-
-          <div className="flex justify-between items-center gap-6">
-            <Field>
-              <FieldLabel htmlFor="password">Password</FieldLabel>
-              <Input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                id="password"
-                type="password"
-                required
-              />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="password">Confirm Password</FieldLabel>
-              <Input
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                id="confirm-passowrd"
-                type="password"
-                required
-              />
-            </Field>
-          </div>
-
           <Field>
-            <Button type="submit">Create Account as a Client</Button>
+            <FieldLabel htmlFor="password">Passoword</FieldLabel>
+            <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              id="password"
+              type="password"
+              required
+            />
+          </Field>
+          <Field>
+            <Button type="submit">Login</Button>
           </Field>
           <FieldSeparator>Or</FieldSeparator>
           <Field className="grid gap-4 sm:grid-cols-2">
