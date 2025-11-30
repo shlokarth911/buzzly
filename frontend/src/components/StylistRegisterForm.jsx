@@ -1,7 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
+import { registerStylist } from "../api/stylist.api";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Field,
   FieldDescription,
@@ -11,13 +26,39 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { registerUser } from "../api/user.api";
 
-export function UserRegisterForm({ className, ...props }) {
+const cities = [
+  {
+    value: "delhi",
+    label: "Delhi",
+  },
+  {
+    value: "mumbai",
+    label: "Mumbai",
+  },
+  {
+    value: "bangalore",
+    label: "Bangalore",
+  },
+  {
+    value: "chennai",
+    label: "Chennai",
+  },
+  {
+    value: "hyderabad",
+    label: "Hyderabad",
+  },
+];
+
+const StylistRegisterForm = ({ className, ...props }) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [open, setOpen] = useState(false);
+  const [city, setCity] = useState("");
 
   const navigate = useNavigate();
 
@@ -30,15 +71,20 @@ export function UserRegisterForm({ className, ...props }) {
         return;
       }
 
-      const userData = {
+      const selectedCityLabel = cities.find((c) => c.value === city)?.label; // Use 'city' state
+
+      const stylistData = {
         name,
         email,
         password,
+        phoneNumber,
+        address,
+        city: selectedCityLabel, // Add the selected city label here
       };
 
-      await registerUser({ userData });
-      toast.success("User registered successfully");
-      navigate("/user/home");
+      await registerStylist({ stylistData });
+      toast.success("Stylist registered successfully");
+      navigate("/stylist/login");
     } catch (error) {
       console.log(error);
       toast.error(error.response?.data?.message || "Registration failed");
@@ -59,7 +105,7 @@ export function UserRegisterForm({ className, ...props }) {
             <h1 className="text-xl font-bold">Welcome to Buzzly</h1>
 
             <FieldDescription>
-              Already have an account? <Link to="/user/login">Log in</Link>
+              Already have an account? <Link to="/stylist/login">Log in</Link>
             </FieldDescription>
           </div>
           <Field>
@@ -84,6 +130,89 @@ export function UserRegisterForm({ className, ...props }) {
               required
             />
           </Field>
+          <Field>
+            <FieldLabel htmlFor="phone-number">Phone Number</FieldLabel>
+            <Input
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              id="phoneNumber"
+              type="number"
+              placeholder="+91 1234567890"
+            />
+          </Field>
+
+          <div className="flex gap-6">
+            <Field>
+              <FieldLabel htmlFor="address">Address</FieldLabel>
+              <Input
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                id="address"
+                type="text"
+                placeholder="123 Main St"
+              />
+            </Field>
+            <Field>
+              <FieldLabel>City</FieldLabel>
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={open}
+                    className="w-full justify-between"
+                  >
+                    {city // Use 'city' state
+                      ? cities.find((c) => c.value === city)?.label // Use 'city' state
+                      : "Select city..."}
+                    <ChevronsUpDown className="opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[200px] p-0">
+                  <Command>
+                    <CommandInput
+                      placeholder="Search framework..."
+                      className="h-9"
+                    />
+                    <CommandList>
+                      <CommandEmpty>No city found.</CommandEmpty>
+                      <CommandGroup>
+                        {cities.map(
+                          (
+                            item // Renamed loop variable to 'item' for clarity
+                          ) => (
+                            <CommandItem
+                              key={item.value}
+                              value={item.value}
+                              onSelect={(currentValue) => {
+                                setCity(
+                                  // Use 'setCity'
+                                  currentValue === city // Use 'city' state
+                                    ? ""
+                                    : currentValue
+                                );
+                                setOpen(false);
+                              }}
+                            >
+                              {item.label}
+                              <Check
+                                className={cn(
+                                  "ml-auto",
+                                  city === item.value // Use 'city' state
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                            </CommandItem>
+                          )
+                        )}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </Field>
+          </div>
 
           <div className="flex justify-between items-center gap-6">
             <Field>
@@ -109,7 +238,7 @@ export function UserRegisterForm({ className, ...props }) {
           </div>
 
           <Field>
-            <Button type="submit">Create Account as a Client</Button>
+            <Button type="submit">Create Account as a Stylist</Button>
           </Field>
           <FieldSeparator>Or</FieldSeparator>
           <Field className="grid gap-4 sm:grid-cols-2">
@@ -144,8 +273,9 @@ export function UserRegisterForm({ className, ...props }) {
               Continue with Google
             </Button>
           </Field>
-          <Link className="text-center underline" to={"/stylist/register"}>
-            Continue as Stylist
+
+          <Link className="text-center underline" to={"/user/register"}>
+            Continue as Client
           </Link>
         </FieldGroup>
       </form>
@@ -155,4 +285,6 @@ export function UserRegisterForm({ className, ...props }) {
       </FieldDescription>
     </div>
   );
-}
+};
+
+export default StylistRegisterForm;
