@@ -90,7 +90,10 @@ module.exports.loginStylist = async (req, res) => {
     res
       .status(200)
       .json({ message: "Login Successful", token, stylist: stylistData });
-  } catch (error) {}
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
 };
 
 module.exports.getStylistProfile = async (req, res) => {

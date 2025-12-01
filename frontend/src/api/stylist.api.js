@@ -24,7 +24,7 @@ export const stylistLogin = async ({ stylistData }) => {
   try {
     const response = await axios.post(`${API_BASE}/stylist/login`, stylistData);
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       const data = response.data;
       localStorage.setItem("stylist_token", data.token);
     }

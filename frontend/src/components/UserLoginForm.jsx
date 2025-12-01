@@ -21,7 +21,7 @@ export function UserLoginForm({ className, ...props }) {
 
   const navigate = useNavigate();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     try {
@@ -30,11 +30,12 @@ export function UserLoginForm({ className, ...props }) {
         password,
       };
 
-      loginUser({ userData });
+      await loginUser({ userData });
       toast.success("Logged in Successfully");
       navigate("/user/home");
     } catch (error) {
       console.log(error);
+      toast.error("Failed to login");
     }
   };
 

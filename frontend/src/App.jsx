@@ -8,6 +8,8 @@ import StylistRegister from "./pages/StylistRegister";
 import StylistLogin from "./pages/StylistLogin";
 import UserProtectedWrapper from "./components/UserProtectedWrapper";
 import UserLayout from "./components/UserLayout";
+import StylistProtectedWrapper from "./components/StylistProtectedWrapper";
+import StylistLayout from "./components/StylistLayout";
 
 const App = () => {
   return (
@@ -24,6 +26,17 @@ const App = () => {
           }
         >
           <Route path="home" element={<h1>User Home</h1>} />
+        </Route>
+
+        <Route
+          path="/stylist"
+          element={
+            <StylistProtectedWrapper>
+              <StylistLayout />
+            </StylistProtectedWrapper>
+          }
+        >
+          <Route path="home" element={<h1>Stylist Home</h1>} />
         </Route>
 
         {/* Stylist paths */}

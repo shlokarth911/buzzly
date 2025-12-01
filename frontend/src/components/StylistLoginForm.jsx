@@ -21,7 +21,7 @@ const StylistLoginForm = ({ className, ...props }) => {
 
   const navigate = useNavigate();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     try {
@@ -31,11 +31,12 @@ const StylistLoginForm = ({ className, ...props }) => {
         password,
       };
 
-      stylistLogin({ stylistData });
+      await stylistLogin({ stylistData });
       toast.success("Stylist logged in successfully");
       navigate("/stylist/home");
     } catch (error) {
       console.log(error);
+      toast.error("Failed to login");
     }
   };
 
