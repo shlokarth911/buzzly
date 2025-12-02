@@ -1,7 +1,7 @@
 import axios from "axios";
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Spinner } from "./ui/spinner";
+import { Spinner } from "../ui/spinner";
 
 const UserProtectedWrapper = ({ children }) => {
   const token = localStorage.getItem("user_token");

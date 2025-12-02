@@ -1,5 +1,4 @@
-import { GalleryVerticalEnd } from "lucide-react";
-
+import React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,11 +12,12 @@ import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "sonner";
-import { loginUser } from "../api/user.api";
+import { stylistLogin } from "../../../api/stylist.api";
 
-export function UserLoginForm({ className, ...props }) {
+const StylistLoginForm = ({ className, ...props }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const navigate = useNavigate();
 
@@ -25,14 +25,15 @@ export function UserLoginForm({ className, ...props }) {
     e.preventDefault();
 
     try {
-      const userData = {
+      const stylistData = {
         email,
+        phoneNumber,
         password,
       };
 
-      await loginUser({ userData });
-      toast.success("Logged in Successfully");
-      navigate("/user/home");
+      await stylistLogin({ stylistData });
+      toast.success("Stylist logged in successfully");
+      navigate("/stylist/home");
     } catch (error) {
       console.log(error);
       toast.error("Failed to login");
@@ -47,7 +48,7 @@ export function UserLoginForm({ className, ...props }) {
             <h1 className="text-xl font-bold">Welcome to Buzzly</h1>
             <FieldDescription>
               Don&apos;t have an account?{" "}
-              <Link to="/user/register">Register</Link>
+              <Link to="/stylist/register">Register</Link>
             </FieldDescription>
           </div>
           <Field>
@@ -62,6 +63,16 @@ export function UserLoginForm({ className, ...props }) {
             />
           </Field>
           <Field>
+            <FieldLabel htmlFor="phoneNumber">PhoneNumber</FieldLabel>
+            <Input
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              id="phoneNumber"
+              type="phoneNumber"
+              placeholder="+91 1234567890"
+            />
+          </Field>
+          <Field>
             <FieldLabel htmlFor="password">Passoword</FieldLabel>
             <Input
               value={password}
@@ -72,7 +83,7 @@ export function UserLoginForm({ className, ...props }) {
             />
           </Field>
           <Field>
-            <Button type="submit">Login</Button>
+            <Button type="submit">Login Stylist</Button>
           </Field>
           <FieldSeparator>Or</FieldSeparator>
           <Field className="grid gap-4 sm:grid-cols-2">
@@ -107,8 +118,9 @@ export function UserLoginForm({ className, ...props }) {
               Continue with Google
             </Button>
           </Field>
-          <Link className="text-center underline" to={"/stylist/login"}>
-            Continue as Stylist
+
+          <Link className="text-center underline" to={"/user/login"}>
+            Continue as Client
           </Link>
         </FieldGroup>
       </form>
@@ -118,4 +130,6 @@ export function UserLoginForm({ className, ...props }) {
       </FieldDescription>
     </div>
   );
-}
+};
+
+export default StylistLoginForm;

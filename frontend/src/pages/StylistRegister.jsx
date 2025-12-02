@@ -1,5 +1,5 @@
 import React from "react";
-import StylistRegisterForm from "../components/StylistRegisterForm";
+import StylistRegisterForm from "../features/auth/components/StylistRegisterForm";
 
 const StylistRegister = () => {
   return (

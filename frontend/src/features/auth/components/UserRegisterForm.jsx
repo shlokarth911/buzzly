@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { registerUser } from "../api/user.api";
+import { registerUser } from "../../../api/user.api";
 
 export function UserRegisterForm({ className, ...props }) {
   const [name, setName] = useState("");

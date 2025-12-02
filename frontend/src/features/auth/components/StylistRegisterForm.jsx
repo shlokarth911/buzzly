@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { registerStylist } from "../api/stylist.api";
+import { registerStylist } from "../../../api/stylist.api";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";

@@ -1,4 +1,4 @@
-import StylistLoginForm from "../components/StylistLoginForm";
+import StylistLoginForm from "../features/auth/components/StylistLoginForm";
 
 const StylistLogin = () => {
   return (

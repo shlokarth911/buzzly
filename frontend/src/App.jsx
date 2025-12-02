@@ -6,10 +6,11 @@ import UserRegister from "./pages/UserRegister";
 import UserLogin from "./pages/UserLogin";
 import StylistRegister from "./pages/StylistRegister";
 import StylistLogin from "./pages/StylistLogin";
-import UserProtectedWrapper from "./components/UserProtectedWrapper";
-import UserLayout from "./components/UserLayout";
-import StylistProtectedWrapper from "./components/StylistProtectedWrapper";
-import StylistLayout from "./components/StylistLayout";
+import UserProtectedWrapper from "./components/wrappers/UserProtectedWrapper";
+import UserLayout from "./components/layouts/UserLayout";
+import StylistProtectedWrapper from "./components/wrappers/StylistProtectedWrapper";
+import StylistLayout from "./components/layouts/StylistLayout";
+import StylistHome from "./pages/Home/stylist/StylistHome";
 
 const App = () => {
   return (
@@ -36,7 +37,7 @@ const App = () => {
             </StylistProtectedWrapper>
           }
         >
-          <Route path="home" element={<h1>Stylist Home</h1>} />
+          <Route path="home" element={<StylistHome />} />
         </Route>
 
         {/* Stylist paths */}
