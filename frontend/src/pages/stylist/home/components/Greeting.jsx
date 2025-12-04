@@ -1,5 +1,6 @@
 import { Bell } from "lucide-react";
 import React from "react";
+import { ModeToggle } from "../../../../components/ModeToggle";
 
 const Greeting = () => {
   return (
@@ -14,12 +15,12 @@ const Greeting = () => {
         </div>
 
         <div>
-          <h1 className="text-sm font-semibold text-white/60">Hi {"David"},</h1>
+          <h1 className="text-sm font-semibold text-/60">Hi {"David"},</h1>
           <p className="text-lg font-semibold">Good Morning</p>
         </div>
       </div>
-      <div className="p-2 bg-white/10 rounded-full">
-        <Bell className="size-6" />
+      <div className="p-2 ">
+        <ModeToggle />
       </div>
     </div>
   );

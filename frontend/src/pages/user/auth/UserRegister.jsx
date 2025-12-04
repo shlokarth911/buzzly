@@ -1,14 +1,14 @@
 import React from "react";
-import StylistRegisterForm from "../features/auth/components/StylistRegisterForm";
+import { UserRegisterForm } from "../../../features/auth/components/UserRegisterForm";
 
-const StylistRegister = () => {
+const UserRegister = () => {
   return (
     <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="w-full max-w-sm">
-        <StylistRegisterForm />
+        <UserRegisterForm />
       </div>
     </div>
   );
 };
 
-export default StylistRegister;
+export default UserRegister;

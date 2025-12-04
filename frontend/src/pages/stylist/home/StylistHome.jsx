@@ -2,6 +2,7 @@ import React from "react";
 import Greeting from "./components/Greeting";
 import Search from "./components/Search";
 import Dashboard from "./components/Dashboard";
+import UpcomingAppointments from "./components/UpcomingAppointments";
 
 const StylistHome = () => {
   return (
@@ -9,6 +10,8 @@ const StylistHome = () => {
       <Greeting />
 
       <Dashboard />
+
+      <UpcomingAppointments />
     </div>
   );
 };

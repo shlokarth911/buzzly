@@ -2,15 +2,15 @@ import React from "react";
 import { ModeToggle } from "./components/ModeToggle";
 import { Toaster } from "@/components/ui/sonner";
 import { Routes, Route } from "react-router-dom";
-import UserRegister from "./pages/UserRegister";
-import UserLogin from "./pages/UserLogin";
-import StylistRegister from "./pages/StylistRegister";
-import StylistLogin from "./pages/StylistLogin";
+import UserRegister from "./pages/user/auth/UserRegister";
+import UserLogin from "./pages/user/auth/UserLogin";
+import StylistRegister from "./pages/stylist/auth/StylistRegister";
+import StylistLogin from "./pages/stylist/auth/StylistLogin";
 import UserProtectedWrapper from "./components/wrappers/UserProtectedWrapper";
 import UserLayout from "./components/layouts/UserLayout";
 import StylistProtectedWrapper from "./components/wrappers/StylistProtectedWrapper";
 import StylistLayout from "./components/layouts/StylistLayout";
-import StylistHome from "./pages/Home/stylist/StylistHome";
+import StylistHome from "./pages/stylist/home/StylistHome";
 
 const App = () => {
   return (
