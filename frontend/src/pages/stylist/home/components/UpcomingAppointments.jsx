@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   CardAction,
@@ -10,12 +10,35 @@ import {
 } from "@/components/ui/card";
 
 import { Button } from "@/components/ui/button";
+import AppointmentCard from "./AppointmentCard";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 const UpcomingAppointments = () => {
+  const [open, setOpen] = useState(false);
+
+  const cardRef = useRef(null);
+
+  useGSAP(() => {
+    if (open) {
+      gsap.to(cardRef.current, {
+        opacity: 1,
+        duration: 0.2,
+        pointerEvents: "auto",
+      });
+    } else {
+      gsap.to(cardRef.current, {
+        opacity: 0,
+        duration: 0.2,
+        pointerEvents: "none",
+      });
+    }
+  }, [open]);
+
   return (
     <div className="mt-10">
       <h1 className="text-2xl pb-5 border-b border-neutral-700 font-bold">
-        Upcomming Appointments
+        Upcoming Appointments
       </h1>
 
       <div className="flex flex-col gap-5 mt-5">
@@ -33,7 +56,11 @@ const UpcomingAppointments = () => {
               </CardContent>
             </div>
             <CardFooter className="flex justify-between gap-2">
-              <Button className="w-1/2" variant="outline">
+              <Button
+                onClick={() => setOpen(true)}
+                className="w-1/2"
+                variant="outline"
+              >
                 View Details
               </Button>
               <Button className="w-1/2" variant="destructive">
@@ -41,6 +68,14 @@ const UpcomingAppointments = () => {
               </Button>
             </CardFooter>
           </Card>
+        </div>
+      </div>
+      <div
+        ref={cardRef}
+        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full flex items-center justify-center h-full bg-black/50 opacity-0 pointer-events-none"
+      >
+        <div className="w-[90%] ">
+          <AppointmentCard setOpen={setOpen} />
         </div>
       </div>
     </div>
