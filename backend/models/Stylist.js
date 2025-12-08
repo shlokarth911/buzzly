@@ -32,6 +32,11 @@ const stylistSchema = new Schema({
     type: String,
   },
 
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
+
   services: [
     {
       service: {

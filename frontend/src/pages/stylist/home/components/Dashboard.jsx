@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Card,
@@ -19,9 +19,30 @@ import {
 
 import { Button } from "@/components/ui/button";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
 import { Badge } from "@/components/ui/badge";
 
 const Dashboard = () => {
+  const statusSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(status);
+  };
+
+  const [status, setStatus] = useState("active");
+
   return (
     <div className="mt-10">
       <h1 className="text-2xl pb-5 border-b border-neutral-700 font-bold">
@@ -61,15 +82,63 @@ const Dashboard = () => {
               Current Status
             </ItemTitle>
             <ItemDescription>
-              <Badge variant="default" className="bg-emerald-500 text-white">
-                Active
-              </Badge>
+              {status === "active" ? (
+                <Badge variant="default" className="bg-emerald-500 text-white">
+                  Active
+                </Badge>
+              ) : (
+                <Badge variant="default" className="bg-red-500 text-white">
+                  Inactive
+                </Badge>
+              )}
             </ItemDescription>
           </ItemContent>
           <ItemActions>
-            <Button variant="outline" size="lg">
-              Change Status
-            </Button>
+            <Dialog>
+              <DialogTrigger>
+                <Button variant="outline" size="lg">
+                  Change Status
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Change your current status</DialogTitle>
+                  <form onSubmit={statusSubmitHandler} className="mt-6">
+                    <RadioGroup
+                      defaultValue="active"
+                      value={status}
+                      onValueChange={setStatus}
+                    >
+                      <div className="flex items-center gap-3">
+                        <RadioGroupItem value="active" id="r1" />
+                        <Label htmlFor="r1" className="text-lg">
+                          Active
+                        </Label>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <RadioGroupItem value="inactive" id="r2" />
+                        <Label className="text-lg" htmlFor="r2">
+                          Inactive
+                        </Label>
+                      </div>
+                    </RadioGroup>
+
+                    <DialogFooter className="flex gap-3 mt-5">
+                      <DialogClose>
+                        <Button variant="outline" className="w-full">
+                          Cancel
+                        </Button>
+                      </DialogClose>
+                      <DialogClose>
+                        <Button type="submit" className="w-full">
+                          Save changes
+                        </Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </form>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
           </ItemActions>
         </Item>
       </div>

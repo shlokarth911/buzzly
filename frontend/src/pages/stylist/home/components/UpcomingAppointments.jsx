@@ -9,6 +9,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog";
+
 import { Button } from "@/components/ui/button";
 import AppointmentCard from "./AppointmentCard";
 import gsap from "gsap";
@@ -64,7 +75,7 @@ const UpcomingAppointments = () => {
                 View Details
               </Button>
               <Button className="w-1/2" variant="destructive">
-                Cancel
+                <CancelDialog />
               </Button>
             </CardFooter>
           </Card>
@@ -79,6 +90,46 @@ const UpcomingAppointments = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const CancelDialog = ({ appointmentData }) => {
+  const [appointmentDataState, setAppointmentDataState] =
+    useState(appointmentData);
+
+  const handleAppointmentCancellation = () => {
+    console.log("Canceled Appointment of", appointmentDataState.name);
+  };
+
+  return (
+    <Dialog>
+      <DialogTrigger className="w-full">Cancel</DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogDescription className="text-sm my-2">
+            This action cannot be undone. Click confirm to cancel the
+            appointment
+          </DialogDescription>
+          <DialogFooter className="flex gap-3">
+            <DialogClose>
+              <Button variant="outline" className="w-full">
+                Cancel
+              </Button>
+            </DialogClose>
+            <DialogClose>
+              <Button
+                onClick={handleAppointmentCancellation}
+                variant="destructive"
+                className="w-full"
+              >
+                Confirm
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   );
 };
 
