@@ -29,19 +29,13 @@ const Appointments = () => {
         </h2>
 
         <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {upcomingAppointmentData.map((appointmentData) => (
+          {upcomingAppointmentData.map((appointmentData, index) => (
             <UpcomingAppointmetCard
-              key={appointmentData.name}
+              key={index}
               appointmentData={appointmentData}
             />
           ))}
         </div>
-      </div>
-
-      <div className="mt-5">
-        <h2 className="text-xl font-semibold border-b border-b-white/30 pb-2">
-          Completed Appointments
-        </h2>
       </div>
     </div>
   );

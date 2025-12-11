@@ -12,6 +12,7 @@ import StylistProtectedWrapper from "./components/wrappers/StylistProtectedWrapp
 import StylistLayout from "./components/layouts/StylistLayout";
 import StylistHome from "./pages/stylist/home/StylistHome";
 import Appointments from "./pages/stylist/appointments/Appointments";
+import StylistSalon from "./pages/stylist/salon/StylistSalon";
 
 const App = () => {
   return (
@@ -39,7 +40,7 @@ const App = () => {
           }
         >
           <Route path="home" element={<StylistHome />} />
-          <Route path="salon" element={<h1>Salon</h1>} />
+          <Route path="salon" element={<StylistSalon />} />
           <Route path="appointments" element={<Appointments />} />
           <Route path="analytics" element={<h1>Analytics</h1>} />
           <Route path="profile" element={<h1>Profile</h1>} />
